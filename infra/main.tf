@@ -45,3 +45,4 @@ resource "aws_instance" "app_server" {
     Name = var.instance_name
   }
 }
+# Exemplo de comentário no main.tf
