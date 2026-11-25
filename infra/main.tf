@@ -46,3 +46,5 @@ resource "aws_instance" "app_server" {
   }
 }
 # Exemplo de comentário no main.tf
+
+# Gatilho de seguranca para forcar o workflow do Terraform
