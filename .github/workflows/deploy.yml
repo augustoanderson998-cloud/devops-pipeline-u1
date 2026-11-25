@@ -1,0 +1,30 @@
+name: CD - Deploy Continuo Simulado
+
+on:
+  workflow_run:
+    workflows: ["CI - Testes Unitários", "Terraform - Validação e Planejamento"]
+    types:
+      - completed
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Executar Deploy Simulado
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Baixar o código do repositório
+        uses: actions/checkout@v4
+
+      - name: Rodar script de deploy
+        run: |
+          chmod +x deploy/deploy.sh
+          ./deploy/deploy.sh
+
+      - name: Registrar Hash do Commit Implantado
+        run: |
+          echo "=== INFORMAÇÕES DO DEPLOY ==="
+          echo "Deploy realizado com sucesso para o commit: ${{ github.sha }}"
+          echo "Hash do commit: $(git rev-parse --short HEAD)"
