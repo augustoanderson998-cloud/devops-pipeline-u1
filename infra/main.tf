@@ -10,7 +10,7 @@ terraform {
 provider "aws" {
   region = var.aws_region
 
-  # Configurações para permitir simulação local sem credenciais reais da AWS
+  # Ignorar verificações para simulação local sem credenciais reais
   skip_credentials_validation = true
   skip_requesting_account_id  = true
   skip_metadata_api_check     = true
