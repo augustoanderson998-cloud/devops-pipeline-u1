@@ -1,0 +1,38 @@
+name: Terraform - Validação e Planejamento
+
+on:
+  push:
+    paths:
+      - 'infra/**'
+  pull_request:
+    paths:
+      - 'infra/**'
+
+jobs:
+  terraform-check:
+    name: Terraform Init and Plan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar o codigo do repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.0
+
+      - name: Inicializar Terraform (Init)
+        run: |
+          cd infra
+          terraform init -backend=false
+
+      - name: Validar arquivos do Terraform
+        run: |
+          cd infra
+          terraform validate
+
+      - name: Gerar Plano de Execução (Plan)
+        run: |
+          cd infra
+          terraform plan
