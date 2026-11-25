@@ -13,6 +13,12 @@ jobs:
     name: Terraform Init and Plan
     runs-on: ubuntu-latest
 
+    # Configurando variáveis de ambiente mockadas globalmente para o job
+    env:
+      AWS_ACCESS_KEY_ID: mock_key
+      AWS_SECRET_ACCESS_KEY: mock_secret
+      AWS_DEFAULT_REGION: us-east-1
+
     steps:
       - name: Baixar o codigo do repositorio
         uses: actions/checkout@v4
